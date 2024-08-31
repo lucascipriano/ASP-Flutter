@@ -12,6 +12,7 @@ final fetchTodos = atomAction((set) async {
 
 final putAction = atomAction1<TodoModel>((set, model) {
   final currentTodos = todoState.state;
+   print('Current Todos: $currentTodos');
   if (model.id == -1) {
     final newTodo = model.copyWith(id: _autoIncrement);
     _autoIncrement++; // Incrementa o id para o próximo TodoModel

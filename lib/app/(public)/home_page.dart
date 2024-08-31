@@ -1,6 +1,6 @@
 
+import 'package:asp/asp.dart';
 import 'package:flutter/material.dart';
-import 'package:rx_notifier/rx_notifier.dart';
 import 'package:testeboaldo/app/interactor/actions/todo_action.dart';
 import 'package:testeboaldo/app/interactor/atoms/todo_atom.dart';
 import 'package:testeboaldo/app/interactor/models/todo_model.dart';
@@ -60,9 +60,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return RxBuilder(
-      builder: (_) {
+    return AtomBuilder(
+      builder: (_, get) {
         final todos = todoState.state;
+           print('Building UI with Todos: $todos');
         return Scaffold(
           appBar: AppBar(
             title: const Text('Home Page'),
