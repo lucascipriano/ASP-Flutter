@@ -1,3 +1,5 @@
 # testeboaldo
 
-Projeto utilizando [ASP](https://asp.flutterando.com.br/) como gerenciador de estado, repository, [auto_injector](https://pub.dev/packages/auto_injector), [shared_preferences](https://pub.dev/packages/shared_preferences).
+Projeto utilizando [ASP](https://asp.flutterando.com.br/) como gerenciador de estado, repository, [auto_injector](https://pub.dev/packages/auto_injector), [shared_preferences](https://pub.dev/packages/shared_preferences) e [localstore](https://pub.dev/packages/localstore) como alternativa.
+
+![exemplo](./example.gif)
