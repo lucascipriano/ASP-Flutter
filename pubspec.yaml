@@ -39,6 +39,7 @@ dependencies:
   asp: ^2.0.2
   auto_injector: ^2.0.5
   shared_preferences: ^2.3.2
+  localstore: ^1.4.0
 
 dev_dependencies:
   flutter_test:
