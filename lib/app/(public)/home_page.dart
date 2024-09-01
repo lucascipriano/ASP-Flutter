@@ -64,7 +64,6 @@ class _HomePageState extends State<HomePage> {
     return AtomBuilder(
       builder: (_, get) {
         final todos = get(todoState);
-        print('Building UI with Todos: $todos');
         return Scaffold(
           appBar: AppBar(
             title: const Text('Home Page'),

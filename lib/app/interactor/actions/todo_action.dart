@@ -1,45 +1,33 @@
 import 'package:asp/asp.dart';
+import 'package:testeboaldo/app/injector.dart';
 import 'package:testeboaldo/app/interactor/atoms/todo_atom.dart';
 import 'package:testeboaldo/app/interactor/models/todo_model.dart';
-
-var _autoIncrement = 4;
+import 'package:testeboaldo/app/interactor/repositories/todo_repository.dart';
 
 final fetchTodos = atomAction((set) async {
-  todoState.addListener(() {
-    todoState.state;
-  });
+  final repository = injector.get<TodoRepository>();
+  final todos = await repository.getAll();
+  set(todoState, todos);
 });
 
-final putAction = atomAction1<TodoModel>((set, model) {
-  final currentTodos = todoState.state;
-   print('Current Todos: $currentTodos');
+final putAction = atomAction1<TodoModel>((set, model) async {
+  final repository = injector.get<TodoRepository>();
+
+  // final currentTodos = todoState.state;
   if (model.id == -1) {
-    final newTodo = model.copyWith(id: _autoIncrement);
-    _autoIncrement++; // Incrementa o id para o próximo TodoModel
-
-    final updatedTodos = [...currentTodos, newTodo];
-
-    set(todoState, updatedTodos);
+    await repository.inset(model);
     
   } else {
-    
-    final updatedTodos = currentTodos.map((todo) {
-      
-      return todo.id == model.id ? model : todo;
-    }).toList();
-
-    // Atualiza o estado com a lista modificada
-    set(todoState, updatedTodos);
+    await repository.update(model);
   }
+  // reload list
+  fetchTodos();
 }
 );
 
-final deleteAction = atomAction1<int>((set, id) {
-  final currentTodos = todoState.state;
-
-  // Remove o TodoModel com o id especificado
-  final updatedTodos = currentTodos.where((todo) => todo.id != id).toList();
-
-  // Atualiza o estado com a lista modificada
-  set(todoState, updatedTodos);
+final deleteAction = atomAction1<int>((set, id) async{
+  final repository = injector.get<TodoRepository>();
+  await repository.delete(id);
+  // reload list
+  fetchTodos();
 });
