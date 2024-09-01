@@ -37,7 +37,6 @@ dependencies:
   cupertino_icons: ^1.0.6
   routefly: ^2.0.2
   asp: ^2.0.2
-  rx_notifier: ^2.3.0
 
 dev_dependencies:
   flutter_test:

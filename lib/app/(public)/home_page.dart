@@ -1,6 +1,5 @@
-
-import 'package:asp/asp.dart';
 import 'package:flutter/material.dart';
+import 'package:asp/asp.dart';
 import 'package:testeboaldo/app/interactor/actions/todo_action.dart';
 import 'package:testeboaldo/app/interactor/atoms/todo_atom.dart';
 import 'package:testeboaldo/app/interactor/models/todo_model.dart';
@@ -11,11 +10,12 @@ class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 }
+
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    fetchTodos();
+    fetchTodos(); // Carrega os todos, se necessário
   }
 
   void editTodoDialog([TodoModel? model]) {
@@ -32,13 +32,14 @@ class _HomePageState extends State<HomePage> {
             },
           ),
           actions: [
-            TextButton(
-              onPressed: () {
-                deleteAction(model!.id);
-                Navigator.pop(context);
-              },
-              child: const Text('Delete'),
-            ),
+            if (model!.id != -1)
+              TextButton(
+                onPressed: () {
+                  deleteAction(model!.id);
+                  Navigator.pop(context);
+                },
+                child: const Text('Delete'),
+              ),
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
@@ -62,8 +63,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return AtomBuilder(
       builder: (_, get) {
-        final todos = todoState.state;
-           print('Building UI with Todos: $todos');
+        final todos = get(todoState);
+        print('Building UI with Todos: $todos');
         return Scaffold(
           appBar: AppBar(
             title: const Text('Home Page'),
@@ -89,7 +90,7 @@ class _HomePageState extends State<HomePage> {
             },
           ),
           floatingActionButton: FloatingActionButton(
-            onPressed: editTodoDialog,
+            onPressed: () => editTodoDialog(),
             child: const Icon(Icons.add),
           ),
         );
